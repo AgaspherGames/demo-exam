@@ -64,6 +64,7 @@ class GameController extends Controller
         $game = Game::where('slug', $slug)->first();
 
         if (!$game) return response([]);
+        // if (!$game->versions->count()) return response([]);
 
         return response(
             new GameSlugResource($game)
@@ -78,7 +79,7 @@ class GameController extends Controller
 
         $game = Game::where('slug', $slug)->first();
 
-        if (!$request->user()->id == $game->user_id) {
+        if ($request->user()->id != $game->user_id) {
             return response([
                 "status" => "invalid",
                 "message" => "User is not author of the game"
@@ -120,7 +121,7 @@ class GameController extends Controller
     {
         $game = Game::where('slug', $slug)->first();
 
-        if (!$request->user()->id == $game->user_id) {
+        if ($request->user()->id != $game->user_id) {
             return response([
                 "status" => "forbidden",
                 "message" => "You are not the game author"
@@ -147,16 +148,14 @@ class GameController extends Controller
     {
         $game = Game::where('slug', $slug)->first();
 
-        if (!$request->user()->id == $game->user_id) {
+        if ($request->user()->id != $game->user_id) {
             return response([
                 "status" => "forbidden",
                 "message" => "You are not the game author"
             ], 403);
         }
-
         $game->delete();
 
         return response([], 204);
-
     }
 }

@@ -19,10 +19,10 @@ class GameSlugResource extends JsonResource
             "title" => $this->title,
             "description" => $this->description,
             "thumbnail" => $this->thumbnail,
-            "uploadTimestamp" => $this->created_at,
+            "uploadTimestamp" => $this?->lastVersion?->version?:null,
             "author" => $this->user->username,
             "scoreCount" => $this->scores->count(),
-            "gamePath" => $this->lastVersion->path,
+            "gamePath" => $this?->lastVersion?->path?:null,
         ];
     }
 }
