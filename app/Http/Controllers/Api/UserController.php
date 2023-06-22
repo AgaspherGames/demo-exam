@@ -52,8 +52,8 @@ class UserController extends Controller
     public function signup(Request $request)
     {
         $data = $request->validate([
-            "username" => ["required", "unique:users,username"],
-            "password" => ["required",],
+            "username" => ["required", "unique:users,username", "min:4", "max:60"],
+            "password" => ["required","min:8",],
         ]);
 
         $data["password"] = bcrypt($data["password"]);
